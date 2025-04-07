@@ -12,3 +12,6 @@ login = os.environ.get("login")
 senha = os.environ.get("senha")
 api_key = os.environ.get("api_key")
 
+servico = Service(ChromeDriverManager().install())
+navegador = webdriver.Chrome(service=servico)
+navegador.get('https://www.linkedin.com/feed/')
