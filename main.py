@@ -23,7 +23,6 @@ def post_certo(texto):
         comentar = False
     return comentar
 
-api_key = os.environ.get("api_key")
 
 servico = Service(ChromeDriverManager().install())
 navegador = webdriver.Chrome(service=servico)
