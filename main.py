@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
 import os
 
-def post_certo(texto):
+def verificar_post(texto):
     key = os.environ.get("api_kkey")
     prompt = 'O texto a seguir é a descrição de um post do linkedin, responda 1 caso o post seja sobre programação e não aparenta ser um post patrocinado, caso contrário ou você achar que falta informação para compreender o post responda 0: ' + texto
 
@@ -53,14 +53,15 @@ def raspar(post):
 
 def comentar():
     for i in range(0, 5):
-        if post_certo(raspar(i)):
+        if verificar_post(raspar(i)):
             texto_post = raspar(i)
             botao = navegador.find_elements(By.XPATH, '//button[@aria-label="Comentar"]')[i]
             navegador.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", botao)
             sleep(2)
             botao.click()
             sleep(1)
-            navegador.find_element(By.XPATH, '//div[@contenteditable="true" and @data-placeholder="Adicionar comentário"]').send_keys(gerar_comentario(texto_post))
+            input_comentarios = navegador.find_elements(By.XPATH, '//div[@contenteditable="true" and @data-placeholder="Adicionar comentário"]')
+            input_comentarios[i].send_keys(gerar_comentario(texto_post))
             sleep(3)
             navegador.find_element(By.XPATH, '//button[@class="comments-comment-box__submit-button--cr artdeco-button artdeco-button--1 artdeco-button--primary ember-view"]').click()
             sleep(4)
@@ -69,6 +70,6 @@ def comentar():
 
 realizar_login()
 print(raspar(0))
-print(post_certo(raspar(0)))
+print(verificar_post(raspar(0)))
 comentar()
 input
