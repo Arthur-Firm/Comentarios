@@ -2,7 +2,8 @@ import google.generativeai as genai
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+#from selenium.webdriver.common.action_chains import ActionChains
 from time import sleep
 from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
@@ -52,6 +53,7 @@ def raspar(post):
 
 
 def comentar():
+    sleep(2)
     for i in range(0, 5):
         if verificar_post(raspar(i)):
             texto_post = raspar(i)
@@ -67,9 +69,34 @@ def comentar():
             sleep(4)
 
 
+def pesquisar(desc):
+    sleep(2)
+    navegador.find_element(By.XPATH, '//input[@placeholder="Pesquisar"]').send_keys(desc)
+    navegador.find_element(By.XPATH, '//input[@placeholder="Pesquisar"]').send_keys(Keys.ENTER)
+
+
+def clicar_pessoas():
+    sleep(2)
+    botoes = navegador.find_elements(By.XPATH, '//button[@type="button"]')
+    for botao in botoes:
+        if botao.text == 'Pessoas':
+            botao.click()
+            break
+
+
+def conectar(desc):
+    pesquisar(desc)
+    clicar_pessoas()
+    sleep(1.5)
+    botoes = navegador.find_elements(By.XPATH, '//button[contains(@aria-label, "conectar")]')
+    sleep(0.5)
+    for botao in botoes:
+        botao.click()
+        sleep(1)
+        navegador.find_element(By.XPATH, '//button[@aria-label="Enviar sem nota"]').click()
+        sleep(1)
+
 
 realizar_login()
-print(raspar(0))
-print(verificar_post(raspar(0)))
 comentar()
-input
+input()
