@@ -42,6 +42,6 @@
 Clone o repositório e instale as dependências:
 
 ```bash
-git clone https://github.com/Arthur-Firm/linkedin-auto-engager.git
-cd linkedin-auto-engager
+git clone https://github.com/Arthur-Firm/linkedin_AutoEngager.git
+cd linkedinAutoEngager
 pip install -r requirements.txt
